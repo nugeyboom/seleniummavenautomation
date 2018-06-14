@@ -1,6 +1,8 @@
 package com.dice;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -12,6 +14,34 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class DiceJobSearch {
 
 	public static void main(String[] args) {
+		
+		List<String> keyword = new ArrayList<>();
+		keyword.add("Java Developer");
+		keyword.add("Ruby Developer");
+		keyword.add("JavaScript Developer");
+		keyword.add("C/C++ Developer");
+		keyword.add("Objective-C Developer");
+		keyword.add("Python Developer");
+		keyword.add("Applications Developer");
+		keyword.add("Web Developer");
+		keyword.add("SQL Developer");
+		keyword.add("Automation Test Lead");
+		keyword.add("Front End Developer");
+		keyword.add("AWS Cloud Engineer");
+		keyword.add("Cyber Security");
+		keyword.add("Scrum Master");
+		keyword.add("Network Engineer");
+		keyword.add("Cyber Forensic");
+		keyword.add("Software Engineer");
+		keyword.add("Agile Product Owner");
+		keyword.add("Full Stack Developer");
+		keyword.add("Machine Learning");
+		
+		List <String> newList = new ArrayList<>();
+		
+		String newString="";
+		for(int i = 0; i<keyword.size(); i++){
+		
 		//set up chrome driver path
 		WebDriverManager.chromedriver().setup();
 		//invoke selenium webdriver
@@ -35,11 +65,11 @@ public class DiceJobSearch {
 			throw new RuntimeException("Step FAIL. Dice hompage did not load successfully");
 		}
 		
-		String keyword = "java developer";
-		driver.findElement(By.id("search-field-keyword")).clear();
-		driver.findElement(By.id("search-field-keyword")).sendKeys(keyword);
 		
-		String location = "20910";
+		driver.findElement(By.id("search-field-keyword")).clear();
+		driver.findElement(By.id("search-field-keyword")).sendKeys(keyword.get(i));
+		
+		String location = "20783";
 		
 		driver.findElement(By.id("search-field-location")).clear();
 		driver.findElement(By.id("search-field-location")).sendKeys(location);
@@ -51,12 +81,18 @@ public class DiceJobSearch {
 		
 		int countResult = Integer.parseInt(count.replace(",",""));
 		if (countResult > 0) {
-			System.out.println("Keyword: " + keyword + " Search returned " + countResult + " Results in "+ location);
+			System.out.println("Keyword: " + keyword.get(i) + " Search returned " + countResult + " Results in "+ location);
+			newString= keyword.get(i)+"-"+countResult;
+			newList.add(newString);
 		} else {
-			System.out.println("Step Fail: keyword : " + keyword + " search returned" + countResult + " Results in "+ location);
+			System.out.println("Step Fail: keyword : " + keyword.get(i) + " search returned" + countResult + " Results in "+ location);
 		}
-		
 		driver.close();
+		
+		
+		
+		}
+		System.out.println(newList.toString());
 		System.out.println("Test completed -"+ LocalDateTime.now());
 				
 
